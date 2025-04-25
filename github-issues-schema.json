@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "GitHub Repository Issues API",
-    "description": "Retrieve the list of issues from a specified GitHub repository.",
-    "version": "v1.0.0"
+    "title": "GitHub Repository Assistant API",
+    "description": "Create repositories and upload files to GitHub using the authenticated user's account.",
+    "version": "v2.0.0"
   },
   "servers": [
     {
@@ -41,6 +41,87 @@
           }
         }
       }
+    },
+    "/user/repos": {
+      "post": {
+        "operationId": "createRepo",
+        "description": "Create a new repository under the authenticated user's account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "private": { "type": "boolean" }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Repository created successfully"
+          }
+        }
+      }
+    },
+    "/repos/{owner}/{repo}/contents/{path}": {
+      "put": {
+        "operationId": "uploadFile",
+        "description": "Upload a file to a repository path",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string" },
+                  "content": { "type": "string" },
+                  "branch": { "type": "string" }
+                },
+                "required": ["message", "content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "File uploaded successfully"
+          }
+        }
+      }
     }
-  }
+  },
+  "components": {}
 }
