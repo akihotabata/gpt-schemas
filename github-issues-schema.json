@@ -1,0 +1,46 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "GitHub Repository Issues API",
+    "description": "Retrieve the list of issues from a specified GitHub repository.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.github.com"
+    }
+  ],
+  "paths": {
+    "/repos/{owner}/{repo}/issues": {
+      "get": {
+        "description": "Get a list of issues from a GitHub repository.",
+        "operationId": "getRepoIssues",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "Owner of the GitHub repository (e.g., 'vercel')",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "description": "Repository name (e.g., 'next.js')",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of issues"
+          }
+        }
+      }
+    }
+  }
+}
